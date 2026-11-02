@@ -1,0 +1,44 @@
+"Variable","Category","Total_Customers","Existing_Customers","Attrited_Customers","Attrition_Percent"
+"Gender","F",5358,4428,930,17.3572228443449
+"Gender","M",4769,4072,697,14.6152233172573
+"Education_Level","College",1013,859,154,15.2023692003949
+"Education_Level","Doctorate",451,356,95,21.0643015521064
+"Education_Level","Graduate",3128,2641,487,15.5690537084399
+"Education_Level","High School",2013,1707,306,15.2011922503726
+"Education_Level","Post-Graduate",516,424,92,17.8294573643411
+"Education_Level","Uneducated",1487,1250,237,15.9381304640215
+"Education_Level","Unknown",1519,1263,256,16.8531928900592
+"Marital_Status","Divorced",748,627,121,16.1764705882353
+"Marital_Status","Married",4687,3978,709,15.1269468743333
+"Marital_Status","Single",3943,3275,668,16.9414151661172
+"Marital_Status","Unknown",749,620,129,17.2229639519359
+"Income_Category","$120K +",727,601,126,17.3314993122421
+"Income_Category","$40K - $60K",1790,1519,271,15.1396648044693
+"Income_Category","$60K - $80K",1402,1213,189,13.4807417974322
+"Income_Category","$80K - $120K",1535,1293,242,15.7654723127036
+"Income_Category","Less than $40K",3561,2949,612,17.1861836562763
+"Income_Category","Unknown",1112,925,187,16.8165467625899
+"Card_Category","Blue",9436,7917,1519,16.0979228486647
+"Card_Category","Gold",116,95,21,18.1034482758621
+"Card_Category","Platinum",20,15,5,25
+"Card_Category","Silver",555,473,82,14.7747747747748
+"Months_Inactive_12_mon","0",29,14,15,51.7241379310345
+"Months_Inactive_12_mon","1",2233,2133,100,4.47828034034931
+"Months_Inactive_12_mon","2",3282,2777,505,15.3869591712371
+"Months_Inactive_12_mon","3",3846,3020,826,21.476859074363
+"Months_Inactive_12_mon","4",435,305,130,29.8850574712644
+"Months_Inactive_12_mon","5",178,146,32,17.9775280898876
+"Months_Inactive_12_mon","6",124,105,19,15.3225806451613
+"Contacts_Count_12_mon","0",399,392,7,1.75438596491228
+"Contacts_Count_12_mon","1",1499,1391,108,7.20480320213476
+"Contacts_Count_12_mon","2",3227,2824,403,12.4883792996591
+"Contacts_Count_12_mon","3",3380,2699,681,20.1479289940828
+"Contacts_Count_12_mon","4",1392,1077,315,22.6293103448276
+"Contacts_Count_12_mon","5",176,117,59,33.5227272727273
+"Contacts_Count_12_mon","6",54,0,54,100
+"Total_Relationship_Count","1",910,677,233,25.6043956043956
+"Total_Relationship_Count","2",1243,897,346,27.8358809332261
+"Total_Relationship_Count","3",2305,1905,400,17.353579175705
+"Total_Relationship_Count","4",1912,1687,225,11.7677824267782
+"Total_Relationship_Count","5",1891,1664,227,12.0042305658382
+"Total_Relationship_Count","6",1866,1670,196,10.5037513397642

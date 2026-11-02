@@ -1,0 +1,2 @@
+"Model","Primary_Selection_Criterion","Threshold_Rule","Selected_Threshold","Reference_Threshold"
+"Logistic regression with three natural spline terms","Training cross-validated log loss","Maximum F1 using training out-of-fold predictions",0.339210811098011,0.5

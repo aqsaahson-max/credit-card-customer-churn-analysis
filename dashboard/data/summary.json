@@ -1,0 +1,15 @@
+{
+  "total_records": 10127,
+  "training_count": 8101,
+  "test_count": 2026,
+  "total_existing": 8500,
+  "total_attrited": 1627,
+  "attrition_rate": 16.07,
+  "test_flagged": 360,
+  "test_attrited": 326,
+  "threshold": 0.339210811098011,
+  "tp": 259,
+  "fp": 101,
+  "tn": 1599,
+  "fn": 67
+}

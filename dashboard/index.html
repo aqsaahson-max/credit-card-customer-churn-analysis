@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Retention Decision-Support Dashboard — Statistical Consultancy Prototype</title>
+  <meta name="description" content="A working portfolio prototype demonstrating how statistical findings from credit card customer churn analysis could support a banking team's customer-review process.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Mobile menu toggle -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation">☰</button>
+
+<div class="app-layout">
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- SIDEBAR                                                           -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+        </div>
+        <div>
+          <div class="sidebar-logo-text">Retention DSS</div>
+          <div class="sidebar-logo-sub">Statistical Consultancy Prototype</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <div class="nav-item active" data-screen="overview">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span> Project Overview
+      </div>
+
+      <div class="nav-section-label">Evidence</div>
+      <div class="nav-item" data-screen="descriptive">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span> Customer Activity
+      </div>
+      <div class="nav-item" data-screen="model">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></svg></span> Model Evidence
+      </div>
+
+      <div class="nav-section-label">Review Workflow</div>
+      <div class="nav-item" data-screen="queue">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="6" height="6" rx="1"/><path d="m3 17 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span> Review Queue
+        <span class="nav-item-badge" id="queueBadge">360</span>
+      </div>
+      <div class="nav-item" data-screen="capacity">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg></span> Workload &amp; Capacity
+      </div>
+      <div class="nav-item" data-screen="tracking">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span> Review Tracking
+      </div>
+
+      <div class="nav-section-label">Evaluation</div>
+      <div class="nav-item" data-screen="pilot">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 3h15"/><path d="M6 3v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V3"/><path d="M6 14h12"/></svg></span> Pilot Proposal
+      </div>
+      <div class="nav-item" data-screen="methodology">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span> Methodology
+      </div>
+
+      <div class="nav-section-label">Summary</div>
+      <div class="nav-item" data-screen="recommendations">
+        <span class="nav-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span> Final Recommendations
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      IT3081 Statistical Modelling · Group Project<br>
+      <span class="text-sm">Credit Card Customer Churn Analysis</span>
+    </div>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- MAIN CONTENT                                                      -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-title" id="pageTitle">Project Overview</h1>
+      <p class="page-subtitle" id="pageSubtitle">Customer Retention Decision-Support Dashboard</p>
+    </header>
+
+    <div class="page-body">
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 1: PROJECT OVERVIEW                                     -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen active" id="screen-overview">
+        <div class="callout callout-info">
+          <strong>Consultancy Prototype.</strong> This dashboard demonstrates how statistical findings from a credit card customer churn analysis could support a banking team's customer-review process. All records are anonymised demonstration data from the BankChurners dataset. No production banking system is represented.
+        </div>
+
+        <div class="card" style="border-left: 4px solid var(--accent-orange); margin-bottom: 28px">
+          <div class="card-title" style="font-size: 20px">Executive Summary</div>
+          <div style="font-size: 14px; color: var(--text-secondary); line-height: 1.8">
+            <p>This report investigates recorded credit-card attrition using <strong style="color:var(--text-primary)">10,127</strong> BankChurners customer records. Descriptive and inferential results identify substantial differences in transaction activity and variation across customer groups. These associations guide investigation but do not establish causes of departure.</p>
+            <br>
+            <p>Among the evaluated models, <strong style="color:var(--text-primary)">targeted spline logistic regression</strong> provided the strongest cross-validated probability performance. In the internal modelling holdout, it achieved <strong style="color:var(--text-primary)">ROC-AUC 0.9599</strong> and identified 259 of 326 attrited records at the training-selected threshold, while incorrectly flagging 101 existing records.</p>
+            <br>
+            <p>An academic Customer Retention Decision Support Dashboard prototype has been developed to demonstrate the proposed review process. Written feedback from an experienced card-centre banking professional (21 years&rsquo; experience) supports the practical relevance of the proposal while prioritizing inactivity, reduced spending and validation against operational data.</p>
+            <br>
+            <p style="color:var(--text-muted); font-size:13px"><em>Tasks 6&ndash;9 critically evaluate future methods; no experiment, PCA model, Bayesian analysis or time-series model is claimed as completed. Operational integration, dated-data validation and a controlled retention pilot remain future work.</em></p>
+          </div>
+        </div>
+
+        <div class="metrics-grid" id="overviewMetrics">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title">Business Question</div>
+            <div class="card-description">
+              How can a retention team use customer activity patterns, model scores and available staff capacity to decide which records to review — and then evaluate whether its actions are useful?
+            </div>
+            <div class="detail-section-title" style="margin-top:16px">Proposed Workflow</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              1. Examine customer activity patterns from historical data<br>
+              2. Score records using a validated statistical model<br>
+              3. Prioritise records for human review based on scores and team capacity<br>
+              4. Record review decisions and proposed actions<br>
+              5. Evaluate outcomes through a controlled pilot
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Dataset &amp; Populations</div>
+            <div class="card-description">
+              Source: BankChurners dataset (Kaggle). Contains demographic, relationship and transaction records for credit card holders with a recorded attrition label.
+            </div>
+            <div class="data-table-container" style="font-size:13px">
+              <table class="data-table">
+                <thead><tr><th>Population</th><th>Records</th><th>Purpose</th></tr></thead>
+                <tbody>
+                  <tr><td>Source dataset</td><td id="totalRecords">—</td><td>Complete available data</td></tr>
+                  <tr><td>Training subset</td><td id="trainCount">—</td><td>Model fitting &amp; cross-validation</td></tr>
+                  <tr><td>Internal test subset</td><td id="testCount">—</td><td>Held-out evaluation</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout callout-limitation" style="margin-top:14px">
+              <strong>Limitation:</strong> These are retrospective, labelled records. The attrition label records what was observed, not a prediction of future behaviour. Operational use requires additional validation with dated organizational data.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Project Status</div>
+          <div class="card-description">Current state of the consultancy engagement</div>
+          <div style="display:flex; gap:20px; flex-wrap:wrap; font-size:13px">
+            <div class="flex items-center gap-2"><span class="status-dot reviewed"></span> Statistical analysis completed</div>
+            <div class="flex items-center gap-2"><span class="status-dot reviewed"></span> Model comparison and selection</div>
+            <div class="flex items-center gap-2"><span class="status-dot reviewed"></span> Dashboard prototype built</div>
+            <div class="flex items-center gap-2"><span class="status-dot reviewed"></span> Expert consultation completed</div>
+            <div class="flex items-center gap-2"><span class="status-dot pending"></span> Pilot evaluation not started</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Stakeholders &amp; Affected Parties</div>
+          <div class="card-description">Key stakeholders in the proposed retention consultancy scenario</div>
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead><tr><th>Stakeholder</th><th>Interest in the Problem</th></tr></thead>
+              <tbody>
+                <tr><td>Senior management</td><td>Understanding attrition and deciding whether to invest in further analysis or a retention pilot</td></tr>
+                <tr><td>Retention teams</td><td>Identifying customer groups for further review and developing interventions to test</td></tr>
+                <tr><td>Customer-service personnel</td><td>Understanding customer needs and managing workload associated with customer contact</td></tr>
+                <tr><td>Analytics personnel</td><td>Developing, evaluating, explaining, and monitoring suitable statistical models</td></tr>
+                <tr><td>Risk &amp; compliance</td><td>Assessing appropriate data use, customer targeting, and governance of the proposed process</td></tr>
+                <tr><td>Customers</td><td>Receiving relevant and fair treatment, including appropriate communications and offers</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Consultancy Objectives</div>
+          <div class="card-description">Evidence-based understanding of recorded credit-card customer attrition</div>
+          <div class="pilot-steps">
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">Describe and Investigate Recorded Attrition</div>
+              <div class="pilot-step-desc">Assess data quality, summarize relevant customer characteristics, and investigate selected relationships using appropriate descriptive and inferential techniques.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">Compare Suitable Statistical Classification Models</div>
+              <div class="pilot-step-desc">Evaluate alternative approaches using measures that reflect their ability to distinguish customer groups, produce reliable probabilities, and support interpretation.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">Develop and Critically Evaluate a Retention Framework</div>
+              <div class="pilot-step-desc">Combine statistical findings with research literature to propose a feasible framework, identify implementation requirements, and outline how future retention interventions could be evaluated.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 2: CUSTOMER ACTIVITY (DESCRIPTIVE)                      -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-descriptive">
+        <div class="callout callout-info">
+          <strong>Descriptive findings from Task 3.</strong> These charts summarise observed patterns in the source dataset. They describe what was recorded, not what caused attrition.
+        </div>
+
+        <div class="tabs" id="descriptiveTabs">
+          <button class="tab-btn active" data-tab="desc-distributions">Distributions</button>
+          <button class="tab-btn" data-tab="desc-comparison">By Attrition Status</button>
+          <button class="tab-btn" data-tab="desc-categories">Categorical Patterns</button>
+          <button class="tab-btn" data-tab="desc-inference">Statistical Inference</button>
+          <button class="tab-btn" data-tab="desc-quality">Data Quality</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-desc-distributions">
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-title">Recorded Attrition Distribution</div>
+              <div class="card-description">Source dataset: proportion of existing vs attrited records</div>
+              <div class="chart-container"><canvas id="chartAttrition"></canvas></div>
+              <div class="chart-interpretation">
+                Approximately 16% of records are labelled as attrited. This class imbalance influences threshold selection and evaluation metric choices.
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">Transaction Count Distribution</div>
+              <div class="card-description">Total number of transactions recorded in the observation period</div>
+              <div class="chart-container"><canvas id="chartTransCount"></canvas></div>
+              <div class="chart-interpretation">
+                Transaction count shows two visible modes. The lower-activity group contains a higher proportion of attrited records.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-desc-comparison">
+          <div class="card">
+            <div class="card-title">Numeric Variables by Attrition Status</div>
+            <div class="card-description">Comparing means and standard deviations between existing and attrited customer groups</div>
+            <div class="data-table-container" id="comparisonTableContainer">
+              <!-- Populated by JS -->
+            </div>
+            <div class="chart-interpretation">
+              Attrited records show lower transaction counts (mean 45 vs 69), lower transaction amounts (mean $3,095 vs $4,655), and higher inactivity months (mean 2.7 vs 2.3). These are observed associations, not established causal effects.
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-desc-categories">
+          <div class="card-grid">
+            <div class="card">
+              <div class="card-title">Attrition by Contact Count</div>
+              <div class="card-description">Proportion of attrited records within each contacts-in-12-months group</div>
+              <div class="chart-container"><canvas id="chartContacts"></canvas></div>
+              <div class="chart-interpretation">
+                Attrition rate increases with contact count. Records with 6 contacts show 100% attrition (N=54). Higher contact frequency may indicate unresolved service issues, though causal direction cannot be established from these data.
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">Attrition by Relationship Count</div>
+              <div class="card-description">Proportion of attrited records by number of banking products held</div>
+              <div class="chart-container"><canvas id="chartRelationships"></canvas></div>
+              <div class="chart-interpretation">
+                Lower product counts are associated with higher attrition rates (26–28% for 1–2 products vs 10–12% for 5–6 products). This supports investigating product engagement as a review criterion.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-desc-inference">
+          <div class="card">
+            <div class="card-title">Statistical Inference Results (Task 4)</div>
+            <div class="card-description">Hypothesis tests with Holm-adjusted p-values controlling family-wise error rate across four primary tests</div>
+            <div class="data-table-container" id="inferenceTableContainer">
+              <!-- Populated by JS -->
+            </div>
+            <div class="chart-interpretation">
+              All four tests reject the null hypothesis after Holm adjustment. These results provide statistical evidence of group differences but do not establish causality. The dataset's uncertain sampling frame limits generalization.
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-desc-quality">
+          <div class="card">
+            <div class="card-title">Data Quality &amp; Preparation Assessment (Task 3)</div>
+            <div class="card-description">Evaluation of completeness, categorical integrity, financial consistency, and outlier handling across all 10,127 records</div>
+            <div class="data-table-container">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Dimension</th><th>Observation</th><th>Proportion / Scope</th><th>Action Taken</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Missing Values</strong></td>
+                    <td>No missing values (NA / null) found across standard fields</td>
+                    <td>0 / 10,127 records</td>
+                    <td>Dataset is syntactically complete; checked for implicit nulls</td>
+                  </tr>
+                  <tr>
+                    <td><strong>"Unknown" Categories</strong></td>
+                    <td>Explicit "Unknown" category in Education, Income, and Marital Status</td>
+                    <td>Education: 15.0% (1,519)<br>Income: 11.0% (1,112)<br>Marital: 7.4% (749)</td>
+                    <td>Retained as distinct informative factor level rather than imputed, as missingness itself may correlate with churn</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Accounting Identity</strong></td>
+                    <td>Credit_Limit - Total_Revolving_Bal = Avg_Open_To_Buy</td>
+                    <td>100% mathematical consistency (all 10,127)</td>
+                    <td>Avg_Open_To_Buy excluded from predictive models due to perfect collinearity</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Extreme Values &amp; Outliers</strong></td>
+                    <td>High-contact accounts (6 contacts: 100% churn, N=54); credit limits up to $34,516; trans amounts up to $18,484</td>
+                    <td>Legitimate behavioral extremes</td>
+                    <td>Retained without trimming or winsorizing to preserve natural commercial distributions and high-risk signals</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Redundant Columns</strong></td>
+                    <td>CLIENTNUM (arbitrary identifier) and 2 pre-computed Naive Bayes columns</td>
+                    <td>3 non-behavioral columns</td>
+                    <td>Excluded from modeling pipeline to prevent data leakage and noise</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Currency &amp; Monetary Units</strong></td>
+                    <td>Income bands use dollar labels ($40K–$60K, etc.); credit limits &amp; transaction amounts are raw numbers</td>
+                    <td>All financial fields (Credit Limit, Balances, Spend)</td>
+                    <td>Currency is unverified. Transaction amounts and balances are displayed without a currency symbol and labelled <em>dataset monetary units</em>.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout callout-info mt-4">
+              <strong>Retrospective Nature:</strong> While data quality is structurally high, records are cross-sectional snapshots without timestamped transactional logs. This limits causal inference and requires prospective operational validation.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 3: MODEL EVIDENCE                                       -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-model">
+        <div class="callout callout-info">
+          <strong>Model evidence from Task 5.</strong> All training metrics use 10-fold cross-validated out-of-fold predictions. Test metrics use the held-out 2,026-record subset evaluated once after model selection.
+        </div>
+
+        <div class="tabs" id="modelTabs">
+          <button class="tab-btn active" data-tab="model-comparison">Model Comparison</button>
+          <button class="tab-btn" data-tab="model-selected">Selected Model</button>
+          <button class="tab-btn" data-tab="model-calibration">Calibration</button>
+          <button class="tab-btn" data-tab="model-threshold">Threshold Analysis</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-model-comparison">
+          <div class="card">
+            <div class="card-title">Cross-Validated Model Comparison</div>
+            <div class="card-description">Training out-of-fold performance across logistic regression variants. All models used the same 10-fold partition.</div>
+            <div class="chart-container"><canvas id="chartModelComparison"></canvas></div>
+            <div class="data-table-container mt-4" id="modelComparisonTableContainer">
+              <!-- Populated by JS -->
+            </div>
+            <div class="chart-interpretation">
+              The spline logistic model achieves the lowest cross-validated log loss (0.176) and highest ROC-AUC (0.960), substantially outperforming penalised and baseline logistic models. This improvement comes from capturing non-linear predictor–outcome relationships.
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-model-selected">
+          <div class="card">
+            <div class="card-title">Selected Model: Logistic Regression with Natural Splines</div>
+            <div class="card-description">Selected based on training cross-validated log loss. Includes three natural spline terms for variables with identified non-linear relationships.</div>
+
+            <div class="metrics-grid">
+              <div class="metric-card" data-accent="blue">
+                <div class="metric-label">ROC-AUC (Test)</div>
+                <div class="metric-value" id="testAUC">—</div>
+                <div class="metric-sub">Discrimination ability</div>
+              </div>
+              <div class="metric-card" data-accent="cyan">
+                <div class="metric-label">Log Loss (Test)</div>
+                <div class="metric-value" id="testLogLoss">—</div>
+                <div class="metric-sub">Probability calibration quality</div>
+              </div>
+              <div class="metric-card" data-accent="emerald">
+                <div class="metric-label">Average Precision</div>
+                <div class="metric-value" id="testAP">—</div>
+                <div class="metric-sub">Precision-recall summary</div>
+              </div>
+              <div class="metric-card" data-accent="amber">
+                <div class="metric-label">Brier Score (Test)</div>
+                <div class="metric-value" id="testBrier">—</div>
+                <div class="metric-sub">Mean squared probability error</div>
+              </div>
+            </div>
+
+            <div class="callout callout-limitation">
+              <strong>Important:</strong> High classification performance on retrospective labelled data does not establish that the model will identify customers who would benefit from retention intervention. The model discriminates recorded attrition patterns, not future behaviour.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Test Set Classification Results</div>
+            <div class="card-description">Confusion matrix and derived metrics at the training-selected threshold (0.3392)</div>
+            <div class="metrics-grid">
+              <div class="metric-card" data-accent="emerald">
+                <div class="metric-label">True Positives</div>
+                <div class="metric-value">259</div>
+                <div class="metric-sub">Correctly flagged attrited</div>
+              </div>
+              <div class="metric-card" data-accent="amber">
+                <div class="metric-label">False Positives</div>
+                <div class="metric-value">101</div>
+                <div class="metric-sub">Existing flagged as attrited</div>
+              </div>
+              <div class="metric-card" data-accent="blue">
+                <div class="metric-label">True Negatives</div>
+                <div class="metric-value">1,599</div>
+                <div class="metric-sub">Correctly unflagged existing</div>
+              </div>
+              <div class="metric-card" data-accent="rose">
+                <div class="metric-label">False Negatives</div>
+                <div class="metric-value">67</div>
+                <div class="metric-sub">Attrited not flagged</div>
+              </div>
+            </div>
+
+            <div class="data-table-container mt-4" id="metricsTableContainer">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-model-calibration">
+          <div class="card">
+            <div class="card-title">Probability Calibration (Test Set)</div>
+            <div class="card-description">Decile calibration table comparing mean predicted probabilities with observed attrition proportions</div>
+            <div class="chart-container"><canvas id="chartCalibration"></canvas></div>
+            <div class="data-table-container mt-4" id="calibrationTableContainer">
+              <!-- Populated by JS -->
+            </div>
+            <div class="chart-interpretation">
+              Calibration is reasonable across most deciles. The highest-scoring group (mean predicted 0.90) shows 90% observed attrition. Some underprediction appears in the middle ranges. The confidence intervals (shown as error bars) illustrate uncertainty in smaller groups.
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-model-threshold">
+        <div class="card">
+          <div class="card-title">Threshold Comparison (Retrospective Evaluation)</div>
+          <div class="card-description">Classification outcomes at different thresholds, using known test-set labels. This is an evaluation view, not an operational recommendation to change the threshold.</div>
+          <div class="data-table-container" id="capacityThresholdTable">
+            <!-- Populated by JS -->
+          </div>
+          <div class="callout callout-warning mt-4">
+            <strong>Caution:</strong> Adjusting the threshold using test-set results would overfit to this particular evaluation sample. The primary threshold (0.3392) was selected using training cross-validation only.
+          </div>
+        </div>
+          <div class="card">
+            <div class="card-title">Threshold Comparison (Test Set)</div>
+            <div class="card-description">Classification trade-offs at the primary training-selected threshold versus a reference 0.50 threshold</div>
+            <div class="data-table-container" id="thresholdTableContainer">
+              <!-- Populated by JS -->
+            </div>
+            <div class="chart-interpretation">
+              The lower threshold (0.3392) flags more records (17.8% vs 14.1%) and achieves higher recall (79.4% vs 69.3%) at the cost of lower precision (71.9% vs 79.3%). The choice depends on whether missed attrited records or unnecessary reviews carry greater organizational cost.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 4: REVIEW QUEUE                                         -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-queue">
+        <div class="callout callout-info">
+          <strong>Retrospective demonstration.</strong> This queue contains 2,026 anonymised test-subset records scored by the selected spline logistic model. Default order: highest score first, so records flagged at the training-selected threshold (≥ 0.3392) appear first. Click a column heading to change the order. Actual attrition labels are hidden from the operational view and shown only in the evaluation context.
+        </div>
+
+        <p class="card-description">Model score for recorded attrition in this dataset. It has not been validated as a probability of future departure. Amounts are in dataset monetary units; currency is unverified.</p>
+        <p class="card-description" id="queueSort" aria-live="polite"></p>
+        <div class="toolbar">
+          <div class="search-box">
+            <input type="text" id="queueSearch" placeholder="Search by Demo ID…">
+          </div>
+          <select class="filter-select" id="queueFilter">
+            <option value="all">All Records (2,026)</option>
+            <option value="flagged">Flagged Only (360)</option>
+            <option value="unflagged">Below Threshold (1,666)</option>
+          </select>
+          <select class="filter-select" id="queueStatusFilter">
+            <option value="all">All Statuses</option>
+            <option value="pending">Pending Review</option>
+            <option value="reviewed">Reviewed</option>
+            <option value="info-needed">Info Needed</option>
+            <option value="no-action">No Action</option>
+            <option value="escalated">Escalated</option>
+          </select>
+          <button class="btn btn-secondary btn-sm" id="resetReviews" title="Reset all simulated review decisions">🔄 Reset Demo</button>
+        </div>
+
+        <div class="data-table-container" style="max-height: 580px; overflow-y: auto;">
+          <table class="data-table" id="queueTable">
+            <thead>
+              <tr>
+                <th data-sort="Demo_ID">Demo ID</th>
+                <th data-sort="Attrition_Score">Attrition Score</th>
+                <th data-sort="Total_Trans_Ct">Trans. Count</th>
+                <th data-sort="Total_Trans_Amt">Trans. Amount</th>
+                <th data-sort="Months_Inactive_12_mon">Inactive Mo.</th>
+                <th data-sort="Total_Relationship_Count">Products</th>
+                <th data-sort="reviewStatus">Status</th>
+              </tr>
+            </thead>
+            <tbody id="queueTableBody">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pagination">
+          <div class="pagination-info" id="paginationInfo">—</div>
+          <div class="pagination-buttons">
+            <button class="btn btn-ghost btn-sm" id="prevPage">← Prev</button>
+            <button class="btn btn-ghost btn-sm" id="nextPage">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 5: WORKLOAD & CAPACITY                                  -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-capacity">
+        <div class="callout callout-info">
+          <strong>Workload planning tool.</strong> Adjust the hypothetical team capacity to explore how many flagged records could be reviewed. The threshold remains the training-selected value (0.3392). Alternative thresholds are available for comparison under Model Evidence.
+        </div>
+
+        <div class="card">
+          <div class="card-title">Team Capacity Simulation</div>
+          <div class="card-description">Set a hypothetical number of records the team could review in one cycle. The default 100 slots are illustrative, not actual bank staffing.</div>
+
+          <div class="slider-group">
+            <div class="slider-label">
+              <span>Hypothetical review capacity</span>
+              <span id="capacityValue">100</span>
+            </div>
+            <input type="range" id="capacitySlider" min="0" max="500" value="100" step="10">
+          </div>
+
+          <div class="metrics-grid mt-4">
+            <div class="metric-card" data-accent="blue">
+              <div class="metric-label">Flagged at Threshold</div>
+              <div class="metric-value" id="capFlagged">360</div>
+              <div class="metric-sub">Score ≥ 0.3392</div>
+            </div>
+            <div class="metric-card" data-accent="cyan">
+              <div class="metric-label">Within Capacity</div>
+              <div class="metric-value" id="capWithin">100</div>
+              <div class="metric-sub">Highest-scoring records in queue</div>
+            </div>
+            <div class="metric-card" data-accent="amber">
+              <div class="metric-label">Exceeds Capacity By</div>
+              <div class="metric-value" id="capExcess">260</div>
+              <div class="metric-sub">Additional flagged records</div>
+            </div>
+            <div class="metric-card" data-accent="emerald">
+              <div class="metric-label">Capacity Utilisation</div>
+              <div class="metric-value" id="capUtil">100%</div>
+              <div class="metric-sub">Of available review slots</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 6: REVIEW TRACKING                                      -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-tracking">
+        <div class="callout callout-info">
+          <strong>Simulated review activity.</strong> Tracking covers all 2,026 records, including records below threshold. These counts reflect simulated decisions and notes recorded during this session; they do not indicate customer contact, retention, or investigation. They are not historical actions by a bank. Refreshing the page or clicking "Reset Demo" clears all decisions and notes.
+        </div>
+
+        <div class="review-summary-grid" id="reviewSummary">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="card">
+          <div class="card-title">Recent Review Decisions</div>
+          <div class="card-description">Records with simulated review outcomes from this session</div>
+          <div class="data-table-container" style="max-height: 400px; overflow-y: auto;">
+            <table class="data-table" id="reviewedTable">
+              <thead>
+                <tr>
+                  <th>Demo ID</th>
+                  <th>Score</th>
+                  <th>Decision</th>
+                  <th>Note</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="reviewedTableBody">
+                <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:32px">No reviews recorded yet. Open a record from the Review Queue to begin.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 7: PILOT PROPOSAL                                       -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-pilot">
+        <div class="card">
+          <div class="card-title">Proposed Controlled Pilot Evaluation</div>
+          <div class="card-description">Before operational deployment, a controlled evaluation would establish whether the proposed review process provides value beyond current practice.</div>
+
+          <div class="pilot-steps">
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">1. Verify Dated Organizational Data</div>
+              <div class="pilot-step-desc">Confirm that the organization possesses timestamped transaction records and departure dates that allow prospective model evaluation — not just retrospective label reconstruction.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">2. Independent Model Validation</div>
+              <div class="pilot-step-desc">Retrain and validate the model on recent organizational data. Compare calibration and discrimination against the results observed in this prototype.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">3. Define Review &amp; Contact Policy</div>
+              <div class="pilot-step-desc">Establish what the retention team will actually do when reviewing flagged records. This policy must exist before measuring whether review improves retention.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">4. Run a Controlled Pilot (RCBD or CRD)</div>
+              <div class="pilot-step-desc">Randomly assign flagged customers to review (treatment) or standard service (control). A Randomized Complete Block Design, blocking on score tier, would control for score-related confounding. A Completely Randomized Design is simpler but may be sufficient if sample size is adequate.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">5. Evaluate Retention, Cost, Workload &amp; Experience</div>
+              <div class="pilot-step-desc">Measure retention rates in both groups after a defined follow-up period. Assess cost per retained customer, analyst workload, and customer experience outcomes. A single metric (accuracy) is insufficient.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">6. Revise the Process Based on Evidence</div>
+              <div class="pilot-step-desc">Use pilot results to decide whether to scale, modify, or discontinue the review process. Document lessons for future iterations.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Critical Evaluation: Experimental Design (Task 6)</div>
+          <div class="card-description">Comparison of Completely Randomized Design (CRD) versus Randomized Complete Block Design (RCBD) for evaluating retention interventions</div>
+          
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead>
+                <tr><th>Design Dimension</th><th>Completely Randomized Design (CRD)</th><th>Randomized Complete Block Design (RCBD)</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Allocation Mechanism</strong></td>
+                  <td>Flagged customers randomized 1:1 directly to review treatment or control without grouping</td>
+                  <td>Customers grouped into homogeneous blocks (e.g. by model risk tier or baseline spend) before 1:1 randomization within each block</td>
+                </tr>
+                <tr>
+                  <td><strong>Statistical Efficiency</strong></td>
+                  <td>Higher residual variance; random imbalance in customer activity across arms is possible</td>
+                  <td>Isolates nuisance variability; smaller standard error for the treatment effect, increasing statistical power</td>
+                </tr>
+                <tr>
+                  <td><strong>Operational Simplicity</strong></td>
+                  <td>High: straightforward implementation, central allocation, lower administrative tracking overhead</td>
+                  <td>Moderate: requires pre-intervention profiling and blocking before assignment</td>
+                </tr>
+                <tr>
+                  <td><strong>Recommendation</strong></td>
+                  <td>Acceptable if sample size is large and uniform delivery is required</td>
+                  <td><strong style="color:var(--accent-orange)">Recommended approach.</strong> Blocking on churn probability tier ensures balanced risk distributions across treatment and control arms</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Industry Expert Consultation (Task 11)</div>
+          <div class="card-description">Formal evaluation from an experienced banking professional (21 years' experience in Card Operations and Retention at Assistant Vice President level)</div>
+
+          <div class="callout callout-info">
+            <strong>Consultation Evidence:</strong> Written feedback received on 29 September 2026. Paraphrased under anonymized academic attribution. The expert awarded <strong>5 / 5 ("Very High")</strong> across all four evaluation areas: Problem Relevance, Practicality of Recommendations, Implementation Feasibility, and Organizational Impact.
+          </div>
+
+          <div class="metrics-grid mt-4" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 20px">
+            <div class="metric-card" style="text-align:center">
+              <div class="metric-value" style="color:var(--accent-teal)">5 / 5</div>
+              <div class="metric-label">Problem Relevance</div>
+            </div>
+            <div class="metric-card" style="text-align:center">
+              <div class="metric-value" style="color:var(--accent-teal)">5 / 5</div>
+              <div class="metric-label">Practicality</div>
+            </div>
+            <div class="metric-card" style="text-align:center">
+              <div class="metric-value" style="color:var(--accent-teal)">5 / 5</div>
+              <div class="metric-label">Feasibility</div>
+            </div>
+            <div class="metric-card" style="text-align:center">
+              <div class="metric-value" style="color:var(--accent-teal)">5 / 5</div>
+              <div class="metric-label">Potential Impact</div>
+            </div>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead><tr><th>Expert Observation</th><th>Team Response</th><th>Effect on Proposal</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Inactivity &amp; reduced spending:</strong> Prioritize these two factors as key precursors contributing to eventual card closure.</td>
+                  <td><span class="badge badge-reviewed">Accepted</span> for future design</td>
+                  <td>Define inactivity and spend contraction separately from the binary attrition label; incorporate into prospective monitoring.</td>
+                </tr>
+                <tr>
+                  <td><strong>Alternative explanations:</strong> Lower activity often indicates non-primary card usage rather than dissatisfaction.</td>
+                  <td><span class="badge badge-reviewed">Accepted</span></td>
+                  <td>Require contextual staff review; avoid treating lower transaction frequency as standalone proof of customer dissatisfaction.</td>
+                </tr>
+                <tr>
+                  <td><strong>Contact methods &amp; offers:</strong> Recommends phone calls or SMS; study should guide recommended retention offers.</td>
+                  <td><span class="badge badge-reviewed">Modified</span></td>
+                  <td>Provide approved channel and action guidance; defer automated offer selection until causal uplift evidence is measured.</td>
+                </tr>
+                <tr>
+                  <td><strong>Workload sizing &amp; contact:</strong> Scale staffing by queue size; maintain frequent ongoing communication.</td>
+                  <td><span class="badge badge-reviewed">Modified</span></td>
+                  <td>Size capacity based on operational costs, customer preferences, and pilot evidence rather than unrestricted outreach.</td>
+                </tr>
+                <tr>
+                  <td><strong>60-day closure rule:</strong> Suggests proceeding to card closure if inactive for 60 days.</td>
+                  <td><span class="badge badge-pending">Deferred</span></td>
+                  <td>Clarify whether this applies to newly issued non-activated cards; do not adopt an automatic account closure policy.</td>
+                </tr>
+                <tr>
+                  <td><strong>Operational data &amp; histories:</strong> Future recommendation, not implemented in this prototype: testing on authorized live system data with 12–24 months of transaction, payment, and supplementary-card history.</td>
+                  <td><span class="badge badge-reviewed">Accepted</span> as future requirement</td>
+                  <td>Identify card-management system extraction requirements and design longitudinal data pipelines before live deployment.</td>
+                </tr>
+                <tr>
+                  <td><strong>Pilot success metrics:</strong> Prioritize retention, number of activated cards, and incremental spend generated.</td>
+                  <td><span class="badge badge-reviewed">Accepted</span> with safeguards</td>
+                  <td>Adopt retention, activation, and spend as primary pilot metrics, while retaining complaints, staff time, and net cost safeguards.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 8: METHODOLOGY                                          -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-methodology">
+        <div class="tabs" id="methodTabs">
+          <button class="tab-btn active" data-tab="meth-approach">Approach</button>
+          <button class="tab-btn" data-tab="meth-pca">PCA Evaluation</button>
+          <button class="tab-btn" data-tab="meth-bayesian">Bayesian Methods</button>
+          <button class="tab-btn" data-tab="meth-timeseries">Time Series</button>
+          <button class="tab-btn" data-tab="meth-limitations">Limitations</button>
+        </div>
+
+        <div class="tab-panel active" id="tab-meth-approach">
+          <div class="card">
+            <div class="card-title">Modelling Approach Summary</div>
+            <div class="card-description">Key methodological decisions and their justification</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p><strong style="color:var(--text-primary)">Model family:</strong> Logistic regression with natural spline basis expansion for variables exhibiting non-linear log-odds relationships (identified via Likelihood Ratio Test, p &lt; 0.001).</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Selection criterion:</strong> Training 10-fold cross-validated log loss — a proper scoring rule that rewards accurate probability estimates rather than just correct classifications.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Threshold selection:</strong> Maximum F1 score on training out-of-fold predictions (0.3392). This balances precision and recall without using test data for selection.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Competitors evaluated:</strong> Baseline logistic regression, Ridge, LASSO, and Elastic Net (α = 0.25, 0.50, 0.75). All used the same 10-fold cross-validation partition for comparability.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Why not higher complexity:</strong> The spline logistic model achieves strong discrimination (AUC 0.96) while remaining interpretable. The improvement over penalised models justifies the additional complexity. More complex methods (random forests, gradient boosting) were not considered because the assignment focuses on statistical modelling techniques.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-meth-pca">
+          <div class="card">
+            <div class="card-title">Critical Evaluation: Principal Component Analysis (Task 7)</div>
+            <div class="card-description">Assessment of whether dimensionality reduction would benefit this analysis</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p><strong style="color:var(--text-primary)">Conclusion: PCA is not recommended for this dataset.</strong></p>
+              <br>
+              <p>The BankChurners dataset contains 19 predictor variables — a moderate dimensionality that does not require reduction for computational reasons. The Spearman correlation matrix (Task 3) identifies only 3 strong correlations, suggesting limited redundancy among predictors.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Potential advantages:</strong> PCA could reduce multicollinearity between correlated pairs (e.g., Credit_Limit and Avg_Open_To_Buy, r = 0.99). It could also compress the predictor space when combined with penalised regression.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Limitations for this problem:</strong> PCA components are linear combinations that sacrifice individual variable interpretability. In a retention context, managers need to understand which customer behaviours are associated with attrition — not that "Component 3" is elevated. Additionally, PCA assumes linear relationships; the non-linear patterns captured by our spline model would be lost if PCA were applied first.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">When PCA should be considered:</strong> Datasets with hundreds of correlated features (e.g., genomics, text-derived features), problems where interpretability is secondary to prediction, or as a preprocessing step for methods sensitive to multicollinearity.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-meth-bayesian">
+          <div class="card">
+            <div class="card-title">Critical Evaluation: Bayesian Statistical Methods (Task 8)</div>
+            <div class="card-description">Assessment of Bayesian approaches for this business problem</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p><strong style="color:var(--text-primary)">Naïve Bayes:</strong> Would provide a computationally efficient baseline classifier. However, its conditional independence assumption is violated by the correlated transaction variables in this dataset. The BankChurners dataset already includes pre-computed Naïve Bayes scores (removed during preprocessing), suggesting this method has been considered by the data provider.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Bayesian Logistic Regression:</strong> Would allow incorporating prior information about expected attrition rates and coefficient magnitudes. With weakly informative priors (e.g., Student-t with 3–7 degrees of freedom), Bayesian logistic regression would provide full posterior distributions for each coefficient, quantifying parameter uncertainty more naturally than confidence intervals. This is particularly valuable when the organization has domain knowledge about expected relationships.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Bayesian Decision Making:</strong> A formal Bayesian decision framework could incorporate the costs of false positives (unnecessary review effort) and false negatives (missed attrition) to derive an optimal decision threshold. This would replace the current F1-based threshold with one that reflects actual organizational costs — a significant improvement for operational deployment.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Recommendation:</strong> Bayesian approaches are appropriate and could improve the analysis, particularly for threshold selection and uncertainty quantification. They were not implemented in this project due to scope constraints, but represent a promising direction for a pilot evaluation.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-meth-timeseries">
+          <div class="card">
+            <div class="card-title">Critical Evaluation: Time Series Analysis (Task 9)</div>
+            <div class="card-description">Assessment of time series methods for customer retention</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p><strong style="color:var(--text-primary)">Current limitation:</strong> The BankChurners dataset provides only cross-sectional aggregates (e.g., total transaction count, total amount) — not dated monthly or weekly records. Without timestamped data, traditional time series methods (ARIMA, exponential smoothing, seasonal decomposition) cannot be applied.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">If dated data were available:</strong></p>
+              <br>
+              <p>• <strong>Trend analysis:</strong> Monthly transaction counts per customer could reveal declining engagement patterns before departure.</p>
+              <p>• <strong>Seasonal analysis:</strong> Spending patterns may vary by month (e.g., holiday seasons, salary cycles), and adjusting for seasonality could improve attrition prediction.</p>
+              <p>• <strong>ARIMA modelling:</strong> Autoregressive models could forecast individual customer activity trajectories, flagging accounts with predicted engagement declines.</p>
+              <p>• <strong>Aggregate forecasting:</strong> Portfolio-level attrition rates could be forecast using ARIMA or exponential smoothing, supporting workforce planning and budget allocation.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Expected organizational benefits:</strong> Early warning systems based on engagement trajectory changes, proactive rather than retrospective identification, and seasonal staffing for retention teams.</p>
+              <br>
+              <p><strong style="color:var(--text-primary)">Recommendation:</strong> The organization should invest in collecting and storing timestamped transaction records to enable time series approaches in future iterations of this analysis.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tab-meth-limitations">
+          <div class="card">
+            <div class="card-title">Known Limitations &amp; Assumptions</div>
+            <div class="card-description">Constraints that affect interpretation and operational applicability</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <div class="callout callout-warning">
+                <strong>Dataset limitations:</strong>
+                <ul style="margin:8px 0 0 16px; line-height:2">
+                  <li>Retrospective labels — we observe who left, not who will leave</li>
+                  <li>No dated transaction history — only aggregated totals</li>
+                  <li>Unknown sampling frame — selection criteria for inclusion are undocumented</li>
+                  <li>Unknown data vintage — the period these records represent is unspecified</li>
+                  <li>Unverified currency context — income categories use dollar signs ($), but specific national currency (e.g. USD) is unverified; financial values represent "supplied monetary units"</li>
+                  <li>"Unknown" categories in Education (15%) and Income (11%) may indicate systematic missing data</li>
+                </ul>
+              </div>
+              <br>
+              <div class="callout callout-limitation">
+                <strong>Modelling assumptions:</strong>
+                <ul style="margin:8px 0 0 16px; line-height:2">
+                  <li>Independent observations — customer behaviour may be influenced by shared events</li>
+                  <li>Logistic regression assumes a specific functional form (log-odds linear in transformed predictors)</li>
+                  <li>Training-test split assumes rows are exchangeable — violated if there is temporal structure</li>
+                  <li>The threshold was optimised for F1 balance — not for a specific organisational cost structure</li>
+                </ul>
+              </div>
+              <br>
+              <div class="callout callout-info">
+                <strong>What this prototype does not claim:</strong>
+                <ul style="margin:8px 0 0 16px; line-height:2">
+                  <li>That flagged customers will respond to retention offers</li>
+                  <li>That the model produces validated future-departure probabilities</li>
+                  <li>That the dashboard has saved customers or money</li>
+                  <li>That the prototype represents a partner bank's system</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <!-- SCREEN 9: FINAL RECOMMENDATIONS (TASK 12)                       -->
+      <!-- ─────────────────────────────────────────────────────────────── -->
+      <div class="screen" id="screen-recommendations">
+        <div class="callout callout-info">
+          <strong>Strategic Direction.</strong> Proceed with a staged, human-reviewed retention decision-support programme rather than immediate operational deployment. Statistical models identify high-risk associations but do not establish causality or customer responsiveness. Management should sponsor a bounded validation and pilot programme with explicit decision gates.
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title">1. Define Engagement Metrics</div>
+            <div class="card-description">Operational definitions beyond binary attrition</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p>• Agree separate, explicit definitions for account closure, inactivity, reduced spending, and activation/reactivation, including designated observation and outcome windows.</p>
+              <br>
+              <p>• Reflect the expert's emphasis on declining transaction frequency and spend contraction as precursors to departure.</p>
+              <br>
+              <p>• Avoid arbitrary automated actions (e.g., automatic closure after 60 days of inactivity) without contextual investigation.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">2. Longitudinal Data Infrastructure</div>
+            <div class="card-description">Extracting dated records for prospective assessment</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p>• Secure authorized extraction of dated transactions, payment histories (12–24 months as recommended by industry feedback), and supplementary card data.</p>
+              <br>
+              <p>• Enforce strict time-ordered evaluation: fix the decision date, strictly exclude post-decision information from model predictors, and evaluate outcomes prospectively.</p>
+              <br>
+              <p>• Transition from cross-sectional static snapshots to time-series behavioral tracking (Task 9).</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">3. Validate Leading Spline Model</div>
+            <div class="card-description">Local calibration &amp; trade-off evaluation</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p>• Retain the targeted spline logistic model as the leading benchmark (test AUC: 0.9599, recall: 79.5% at threshold 0.3392).</p>
+              <br>
+              <p>• Conduct independent validation on current operational bank data to assess calibration, discrimination, and subgroup stability before acting on scores.</p>
+              <br>
+              <p>• Acknowledge operational trade-offs: the internal test identified 259 attrited customers but generated 101 false positives that require staff review effort.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">4. Capacity-Based Review Sizing</div>
+            <div class="card-description">Human-in-the-loop workload &amp; outreach controls</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p>• The illustrative 17.8% flag rate (360 / 2,026 test records) is an exploration threshold, not an operational outreach quota.</p>
+              <br>
+              <p>• Align review queue volumes strictly with staff capacity, cost-benefit thresholds, and customer contact preferences.</p>
+              <br>
+              <p>• Empower analysts to review context (e.g., secondary card usage, service tickets) before initiating approved phone calls or SMS outreach.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">Controlled Pilot &amp; Organizational Decision Criteria</div>
+          <div class="card-description">Rigorous experimental validation prior to institutional rollout</div>
+          <div class="pilot-steps">
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">Phase A: Shadow Operations (30–60 Days)</div>
+              <div class="pilot-step-desc">Run the decision-support system in shadow mode without customer contact to evaluate data feed stability, score calibration, analyst workload, and decision agreement.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">Phase B: Controlled Randomized Pilot (RCBD / CRD)</div>
+              <div class="pilot-step-desc">Randomize flagged customers to retention action vs standard service. Utilize a Randomized Complete Block Design (blocking on predicted risk tier) to control for baseline differences.</div>
+            </div>
+            <div class="pilot-step">
+              <div class="pilot-step-dot"></div>
+              <div class="pilot-step-title">Phase C: Multi-Dimensional Outcome Measurement</div>
+              <div class="pilot-step-desc">Measure incremental retention, card activation rates, and spend generated (expert priorities), alongside customer complaints, staff handling time, and net financial contribution after retention costs.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title">Risk, Ethics &amp; Governance</div>
+            <div class="card-description">Responsible data handling and decision safeguards</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p>• <strong>Human-in-the-loop:</strong> Model scores support human decisions; no automated negative actions or credit reductions should occur solely from scores.</p>
+              <br>
+              <p>• <strong>Demographic fairness:</strong> Statistical differences by gender (Task 4) or demographic categories must not be used for discriminatory targeting or disparate service delivery.</p>
+              <br>
+              <p>• <strong>Confidentiality &amp; compliance:</strong> Maintain role-based access, audit trails of review notes, and adherence to bank compliance policies.</p>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Future Analytical Enhancements</div>
+            <div class="card-description">Extending statistical methodologies (Tasks 7–9)</div>
+            <div style="font-size:13px; color:var(--text-secondary); line-height:1.7">
+              <p>• <strong>Bayesian Decision Framework (Task 8):</strong> Formulate loss functions incorporating monetary costs of false positives vs false negatives to set optimal decision thresholds.</p>
+              <br>
+              <p>• <strong>Time Series Modeling (Task 9):</strong> Apply ARIMA and trajectory forecasting once timestamped longitudinal records are collected.</p>
+              <br>
+              <p>• <strong>Dimensionality Reduction (Task 7):</strong> Re-evaluate PCA only if the predictor space expands into high-dimensional transaction embeddings.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.page-body -->
+  </main>
+</div><!-- /.app-layout -->
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<!-- DETAIL PANEL (Customer Record Slide-over)                             -->
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<div class="detail-overlay" id="detailOverlay"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-panel-header">
+    <h2 id="detailTitle">Record Detail</h2>
+    <button class="detail-panel-close" id="detailClose">✕</button>
+  </div>
+  <div class="detail-panel-body" id="detailBody">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- Chart.js from CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

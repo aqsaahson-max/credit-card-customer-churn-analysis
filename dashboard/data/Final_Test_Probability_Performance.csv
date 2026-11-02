@@ -1,0 +1,2 @@
+"Model","N","Attrited","Log_Loss","Brier_Score","ROC_AUC","Average_Precision","Mean_Predicted_Probability","Observed_Attrition_Proportion"
+"Selected spline logistic",2026,326,0.179839068339082,0.0550048989831034,0.959861060988813,0.847478276734633,0.158583476407153,0.160908193484699

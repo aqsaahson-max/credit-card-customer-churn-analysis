@@ -1,0 +1,5 @@
+"Analysis","Method","Raw_p_value","Holm_adjusted_p_value","Decision_at_5_percent","Raw_p_display","Holm_p_display"
+"Mean transaction count by attrition status","Welch independent-samples t-test",0,0,"Reject H0","< 2.2e-16 (numerical underflow)","< 2.2e-16 (numerical underflow)"
+"Attrition proportion by recorded gender","Two-sample proportion test, no continuity correction",0.000176297680028062,0.000176297680028062,"Reject H0","1.7630e-04","1.7630e-04"
+"Transaction amount spread by attrition status","Median-centred Levene / Brown-Forsythe",2.63578596951662e-23,5.27157193903323e-23,"Reject H0","2.6358e-23","5.2716e-23"
+"Mean transaction count by relationship count","Welch one-way ANOVA",6.64033120813497e-151,1.99209936244049e-150,"Reject H0","6.6403e-151","1.9921e-150"
